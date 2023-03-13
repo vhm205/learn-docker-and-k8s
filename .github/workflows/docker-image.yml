@@ -7,15 +7,23 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build -t 102205/react-dockerize -f Dockerfile.dev .
-      
+
     - name: Test
       run: docker run -e CI=true 102205/react-dockerize npm run test
+
+		- name: Deploy to EB
+			uses: einaregilsson/beanstalk-deploy@v21
+			with:
+				aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+				aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+				application_name: "React Dockerize"
+				environment_name: Reactdockerize-env
+				version_label: ${{github.SHA}}
+				region: ap-southeast-1
