@@ -18,12 +18,12 @@ jobs:
     - name: Test
       run: docker run -e CI=true 102205/react-dockerize npm run test
 
-		- name: Deploy to EB
-			uses: einaregilsson/beanstalk-deploy@v21
-			with:
-				aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-				aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-				application_name: "React Dockerize"
-				environment_name: Reactdockerize-env
-				version_label: ${{github.SHA}}
-				region: ap-southeast-1
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v21
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: "React Dockerize"
+        environment_name: Reactdockerize-env
+        version_label: ${{github.SHA}}
+        region: ap-southeast-1
