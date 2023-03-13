@@ -1,9 +1,0 @@
-sudo: required
-services:
-  - docker
-
-before_install:
-  - docker build -t 102205/react-dockerize -f Dockerfile.dev .
-
-script:
-  - docker run -e CI=true 102205/react-dockerize npm run test
