@@ -15,8 +15,8 @@ jobs:
     - name: Build the Docker image
       run: docker build -t 102205/react-dockerize -f Dockerfile.dev .
 
-    - name: Test
-      run: docker run -e CI=true 102205/react-dockerize npm run test
+    - name: Test Coverage
+      run: docker run -e CI=true 102205/react-dockerize npm run test -- --coverage
 
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
@@ -28,6 +28,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: "React Dockerize"
         environment_name: "Reactdockerize-env"
-        version_label: "ver-${{github.SHA}}"
+        version_label: "sha-${{github.SHA}}"
         region: ap-southeast-1
         deployment_package: deploy.zip
